@@ -1,0 +1,26 @@
+.wrapper {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}
+
+.list ul{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    list-style-type: none;
+}
+
+.list li{
+    margin-left: 70px;
+}
+
+input {
+    width: 300px;
+}
+
+button {
+    width: 50px;
+    margin: 10px;
+    cursor: pointer;
+}

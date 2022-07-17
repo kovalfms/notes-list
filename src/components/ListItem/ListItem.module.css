@@ -1,0 +1,52 @@
+
+.listItem {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    border: 1px solid #6E18C0;
+    margin: 5px;
+    font-size: 20px;
+    -webkit-box-shadow: 0 5px 15px rgb(0 0 0 / 20%);
+}
+
+
+.btnUpDown {
+    font-size: 18px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.btnUpDown:disabled {
+    cursor: auto;
+}
+
+.btnAddSubList {
+    text-align: center;
+    font-size: 14px;
+    width: 80px;
+    height: 40px;
+    border: 1px solid green;
+    cursor: pointer;
+
+}
+.btnRemoveSubList {
+    text-align: center;
+    font-size: 14px;
+    width: 80px;
+    height: 40px;
+    border: 1px solid red;
+    cursor: pointer;
+}
+
+.btnDelete {
+    border: 1px solid red;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 15px;
+    background-color: #fff;
+    cursor: pointer;
+}
