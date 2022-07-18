@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {v4 as uniqId} from "uuid"
 import ListItem from "../ListItem/ListItem";
 import Form from "../form/Form";
@@ -23,21 +23,21 @@ const List = ({data, onUpdate, parentData, parentId}) => {
         setNoteList(prevState => [...prevState, newItem])
     }
 
-    const addSubList =(itemId) => {
+    const addSubList = useCallback((itemId) => {
         const list = [...noteList]
         const findId = list.findIndex(({id}) => id === itemId);
         list[findId].sublist = []
         setNoteList(prevState => [...prevState])
-    }
+    }, [noteList])
 
-    const deleteSublist = (itemId) => {
+    const deleteSublist = useCallback((itemId) => {
         const list = [...noteList]
         const findId = list.findIndex(({id}) => id === itemId);
         delete list[findId].sublist
         setNoteList(prevState => [...prevState])
-    }
+    }, [noteList])
 
-    const upOrDownListItem = (item, delta) => {
+    const upOrDownListItem = useCallback((item, delta) => {
         const newPosition = [...noteList];
         const currentIndex = newPosition.indexOf(item);
         // Remove from the array
@@ -45,12 +45,12 @@ const List = ({data, onUpdate, parentData, parentId}) => {
         // put it back in at the new position
         newPosition.splice(currentIndex + delta, 0, item);
         setNoteList(newPosition)
-    }
+    }, [noteList])
 
-    const onRemoveItem = (id) => {
+    const onRemoveItem = useCallback((id) => {
         setNoteList(prevState => prevState.filter(item => item.id !== id)
         )
-    }
+    }, [])
 
     return (
         <div>
