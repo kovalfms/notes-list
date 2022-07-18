@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
 
-const Form = ({addNewItem, noteList}) => {
+const Form = ({addNewItem}) => {
     const [inputText, setInputText] = useState('')
 
     const checkInput = () => {

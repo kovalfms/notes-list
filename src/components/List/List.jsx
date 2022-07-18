@@ -3,39 +3,38 @@ import {v4 as uniqId} from "uuid"
 import ListItem from "../ListItem/ListItem";
 import Form from "../form/Form";
 
-const List = () => {
-    const [noteList, setNoteList] = useState([])
 
-    // useEffect(() => {
-    //     const items = JSON.parse(localStorage.getItem('notes'));
-    //     if (items) {
-    //         setNoteList(items);
-    //     }
-    // }, []);
+const List = ({data, onUpdate, parentData, parentId}) => {
+    const [noteList, setNoteList] = useState(data)
+
+    useEffect(() => {
+        if (parentData && parentId) {
+            const parentNote = parentData.map(note => note.id === parentId ? ({...note, sublist: noteList}) : note)
+            return onUpdate(parentNote)
+        }
+        return onUpdate(noteList)
+    }, [noteList])
 
     const addNewItem = (text) => {
         const newItem = {
             id: uniqId(),
             text,
         }
-        setNoteList([...noteList, newItem])
-        localStorage.setItem('notes', JSON.stringify([...noteList, newItem]));
+        setNoteList(prevState => [...prevState, newItem])
     }
 
-    const addSubList = (itemId) => {
+    const addSubList =(itemId) => {
         const list = [...noteList]
         const findId = list.findIndex(({id}) => id === itemId);
         list[findId].sublist = []
-        setNoteList(list)
-        localStorage.setItem('notes', JSON.stringify(list))
+        setNoteList(prevState => [...prevState])
     }
 
     const deleteSublist = (itemId) => {
         const list = [...noteList]
         const findId = list.findIndex(({id}) => id === itemId);
         delete list[findId].sublist
-        setNoteList([...noteList])
-        localStorage.setItem('notes', JSON.stringify(list))
+        setNoteList(prevState => [...prevState])
     }
 
     const upOrDownListItem = (item, delta) => {
@@ -46,14 +45,10 @@ const List = () => {
         // put it back in at the new position
         newPosition.splice(currentIndex + delta, 0, item);
         setNoteList(newPosition)
-        localStorage.setItem('notes', JSON.stringify(newPosition))
     }
 
     const onRemoveItem = (id) => {
-        setNoteList(noteList.filter(item => item.id !== id))
-        localStorage.setItem('notes', JSON.stringify(JSON.parse(localStorage.getItem('notes'))
-                .filter((item) => item.id !== id),
-            )
+        setNoteList(prevState => prevState.filter(item => item.id !== id)
         )
     }
 
@@ -71,9 +66,17 @@ const List = () => {
                             addSubList={addSubList}
                             deleteSublist={deleteSublist}
                         />
+                        {item.hasOwnProperty('sublist') &&
+                            <List
+                                data={item.sublist}
+                                onUpdate={setNoteList}
+                                parentData={noteList}
+                                parentId={item.id}
+                            />
+                        }
                     </li>
                 )}
-                <Form addNewItem={addNewItem} noteList={noteList}/>
+                <Form addNewItem={addNewItem}/>
             </ul>
         </div>
     );
