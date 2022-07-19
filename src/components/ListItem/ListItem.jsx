@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './ListItem.module.css'
+import List from "../List/List";
 
 const ListItem = ({
     listLength,
@@ -9,6 +10,8 @@ const ListItem = ({
     deleteSublist,
     upOrDownListItem,
     onRemoveItem,
+    setNoteList,
+    noteList
 }) => {
 
     const {text, id, sublist} = item
@@ -47,10 +50,18 @@ const ListItem = ({
                     </button>
                     : <button
                         className={styles.btnAddSubList}
-                        onClick={() => addSubList(item.id)}
+                        onClick={() => addSubList(id)}
                     >
                         Add Sublist
                     </button>
+                }
+                {item.hasOwnProperty('sublist') &&
+                    <List
+                        data={item.sublist}
+                        onUpdate={setNoteList}
+                        parentData={noteList}
+                        parentId={item.id}
+                    />
                 }
             </div>
         </div>

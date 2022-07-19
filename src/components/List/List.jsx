@@ -65,15 +65,9 @@ const List = ({data, onUpdate, parentData, parentId}) => {
                             upOrDownListItem={upOrDownListItem}
                             addSubList={addSubList}
                             deleteSublist={deleteSublist}
+                            noteList={noteList}
+                            setNoteList={setNoteList}
                         />
-                        {item.hasOwnProperty('sublist') &&
-                            <List
-                                data={item.sublist}
-                                onUpdate={setNoteList}
-                                parentData={noteList}
-                                parentId={item.id}
-                            />
-                        }
                     </li>
                 )}
                 <Form addNewItem={addNewItem}/>
